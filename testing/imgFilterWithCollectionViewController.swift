@@ -14,13 +14,16 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
     @IBOutlet weak var collectionView: UICollectionView!
     var originalImage: UIImage!
     var gradientImage: UIImage!
-    let filterName=["Default", "Map", "Invert", "Chrome", "Fade", "Instant", "Mono", "Noir", "Process", "Tonal", "Transfer"]
-    let filterType = ["", "CIColorMap", "CIColorInvert", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono"
-, "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer"]
+    let filterName=["Default", "Noise Reduction", "Map", "Invert", "Sepia", "Chrome", "Fade", "Instant", "Mono", "Noir", "Process", "Tonal", "Tone1", "Tone2", "Transfer"]
+    let filterType = ["", "CINoiseReduction", "CIColorMap", "CIColorInvert", "CISepiaTone", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono"
+        , "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CISRGBToneCurveToLinear", "CILinearToSRGBToneCurve", "CIPhotoEffectTransfer"]
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        originalImage = #imageLiteral(resourceName: "statue")
+        originalImage = #imageLiteral(resourceName: "Rohan Mittal")
         gradientImage = #imageLiteral(resourceName: "gradient")
         imageView.image = originalImage
         collectionView.delegate = self
@@ -50,14 +53,34 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
                 actionSheet.addAction(cancel)
         
         if let popoverController = actionSheet.popoverPresentationController{
-                           popoverController.sourceView = view
-            popoverController.sourceRect = view.bounds
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = self.view.bounds
                //            popoverController.barButtonItem = sender
                        }
         
                 present(actionSheet, animated: true, completion: nil)
                 
             }
+    
+    @IBAction func shareButton(_ sender: UIButton) {
+        share(sender: sender)
+    }
+    
+    
+       func startActivityIndicator(){
+              activityIndicator.center = self.view.center
+              activityIndicator.hidesWhenStopped = true
+              activityIndicator.style = UIActivityIndicatorView.Style.white
+              let transform = CGAffineTransform(scaleX: 1,y: 1);
+              activityIndicator.transform = transform
+              view.addSubview(activityIndicator)
+              activityIndicator.startAnimating()
+          }
+          
+          func stopActivityIndicator(){
+              activityIndicator.stopAnimating()
+          }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
@@ -121,9 +144,13 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
             case 0:
                 cell.image.image = originalImage
             case 1:
-                cell.image.image = colorMap(image: originalImage)
+                cell.image.image = originalImage.noiseReduction()
             case 2:
-                cell.image.image = colorInvert(image: originalImage)
+                cell.image.image = originalImage.colorMap(gradientImage: gradientImage)
+            case 3:
+                cell.image.image = originalImage.colorInvert()
+            case 4:
+                cell.image.image = originalImage.sepiaTone()
             default:
                 cell.image.image = originalImage.addFilter(filter: FilterType(rawValue: filterType[indexPath.row])!)
             }
@@ -136,19 +163,42 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
             return cell
         }
         
+//        let imageRef = iv.image.cgImage
+//        let context = CIContext(options: nil) // 1
+//        var ciImage: CIImage? = nil
+//        if let imageRef = imageRef {
+//            ciImage = CIImage(cgImage: imageRef)
+//        } // 2
+//        var filter = CIFilter(name: "CINoiseReduction")
+//        filter?.setDefaults()
+//        filter?.setValue(ciImage, forKey: "inputImage") // 3
+//        let ciResult = filter?.value(forKey: kCIOutputImageKey) as? CIImage // 4
+//        var cgImage: CGImage? = nil
+//        if let ciResult = ciResult {
+//            cgImage = context.createCGImage(ciResult, from: ciResult?.extent ?? CGRect.zero)
+//        }
+//        var img: UIImage? = nil
+//        if let cgImage = cgImage {
+//            img = UIImage(cgImage: cgImage)
+//        }
+//        iv.image = img
       
         
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            startActivityIndicator()
             if(indexPath.row == 0){
-                imageView.image = originalImage
+                imageView.image = originalImage.colorAlpha()
             }else if(indexPath.row == 1){
-                imageView.image = colorMap(image: originalImage)
+                imageView.image = originalImage.noiseReduction()
+                
             }else if(indexPath.row == 2){
-                imageView.image = colorInvert(image: originalImage)
+                imageView.image = originalImage.colorMap(gradientImage: gradientImage)
+                stopActivityIndicator()
             }else if(indexPath.row == 3){
-                selectedFilter(indexPath: 3)
+                 imageView.image = originalImage.colorInvert()
+                stopActivityIndicator()
             }else if(indexPath.row == 4){
-                selectedFilter(indexPath: 4)
+                imageView.image = originalImage.sepiaTone()
             }else if(indexPath.row == 5){
                 selectedFilter(indexPath: 5)
             }else if(indexPath.row == 6){
@@ -163,57 +213,39 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
                 selectedFilter(indexPath: 10)
             }else if(indexPath.row == 11){
                 selectedFilter(indexPath: 11)
+            }else if(indexPath.row == 12){
+                selectedFilter(indexPath: 12)
+            }else if(indexPath.row == 13){
+                selectedFilter(indexPath: 13)
+            }else if(indexPath.row == 14){
+                selectedFilter(indexPath: 14)
+            }else if(indexPath.row == 15){
+                selectedFilter(indexPath: 15)
             }
+
         }
     
     func selectedFilter(indexPath: Int){
         imageView.image = originalImage.addFilter(filter: FilterType(rawValue: filterType[indexPath])!)
+        stopActivityIndicator()
     }
     
 
-    func colorInvert(image: UIImage) -> UIImage {
-           let beginImage = CIImage(image: image)
-           if let filter = CIFilter(name: "CIColorInvert") {
-            
-               filter.setValue(beginImage, forKey: kCIInputImageKey)
-            let newImage = UIImage(ciImage: filter.outputImage!)
-            return newImage
-           }
-        return image
-       }
-    
-    
-    func colorMap(image: UIImage) -> UIImage {
-           let beginImage = CIImage(image: image)
-        let colormapImage = CIImage(image: gradientImage)
-           if let filter = CIFilter(name: "CIColorMap") {
-            
-               filter.setValue(beginImage, forKey: kCIInputImageKey)
-            filter.setValue(colormapImage, forKey: kCIInputGradientImageKey)
-            let newImage = UIImage(ciImage: filter.outputImage!)
-            return newImage
-           }
-        return image
-       }
-    
-    
-    
-    
-       func applyColorMap(_ imageIn: CIImage?) -> CIImage? {
-           // Convert imageIn to B&W by using a gradient image half white / half black
-  
-           let colormapImage = gradientImage
-        if colormapImage == nil {
-               print("Bailing out.  Gradient image allocation was NOT successful.")
-               return nil
-           }
-           var colorMapFilter = CIFilter(name: "CIColorMap")
-           //[colorMapFilter setDefaults];
-           colorMapFilter?.setValue(imageIn, forKey: "inputImage")
-           colorMapFilter?.setValue(colormapImage, forKey: "inputGradientImage")
-           return colorMapFilter?.value(forKey: "outputImage") as? CIImage //apply filter and return the new image
-       }
-    
+    func share(sender: UIButton){
+          
+        let activityViewController = UIActivityViewController(activityItems: [imageView.image], applicationActivities: [])
+        
+        if let popoverController = activityViewController.popoverPresentationController{
+        popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+           //            popoverController.barButtonItem = sender
+                   }
+               self.present(activityViewController, animated: true, completion: nil)
+        
+        
+          
+      }
+
     
     
     
@@ -230,19 +262,85 @@ case Noir = "CIPhotoEffectNoir"
 case Process = "CIPhotoEffectProcess"
 case Tonal = "CIPhotoEffectTonal"
 case Transfer =  "CIPhotoEffectTransfer"
+case Tone1 = "CISRGBToneCurveToLinear"
+case Tone2 = "CILinearToSRGBToneCurve"
 }
 
 extension UIImage {
-func addFilter(filter : FilterType) -> UIImage {
-let filter = CIFilter(name: filter.rawValue)
-// convert UIImage to CIImage and set as input
-let ciInput = CIImage(image: self)
-filter?.setValue(ciInput, forKey: "inputImage")
-// get output CIImage, render as CGImage first to retain proper UIImage scale
-let ciOutput = filter?.outputImage
-let ciContext = CIContext()
-let cgImage = ciContext.createCGImage(ciOutput!, from: (ciOutput?.extent)!)
-//Return the image
-return UIImage(cgImage: cgImage!)
-}
+
+    func addFilter(filter : FilterType) -> UIImage {
+        let filter = CIFilter(name: filter.rawValue)
+        // convert UIImage to CIImage and set as input
+        let ciInput = CIImage(image: self)
+        filter?.setValue(ciInput, forKey: "inputImage")
+        // get output CIImage, render as CGImage first to retain proper UIImage scale
+        let ciOutput = filter?.outputImage
+        let ciContext = CIContext()
+        let cgImage = ciContext.createCGImage(ciOutput!, from: (ciOutput?.extent)!)
+        //Return the image
+        return UIImage(cgImage: cgImage!)
+    }
+    
+      func noiseReduction() -> UIImage{
+          let beginImage = CIImage(image: self)
+
+        print("In function")
+             if let filter = CIFilter(name: "CINoiseReduction") {
+                          filter.setDefaults()
+                 filter.setValue(beginImage, forKey: kCIInputImageKey)
+              filter.setValue(0.1, forKey: "inputNoiseLevel")
+              filter.setValue(0.4, forKey: "inputSharpness")
+              let newImage = UIImage(ciImage: filter.outputImage!)
+    
+              return newImage
+             }
+          return self
+      }
+    
+    func colorInvert() -> UIImage {
+           let beginImage = CIImage(image: self)
+           if let filter = CIFilter(name: "CIColorInvert") {
+            
+               filter.setValue(beginImage, forKey: kCIInputImageKey)
+            let newImage = UIImage(ciImage: filter.outputImage!)
+            return newImage
+           }
+        return self
+       }
+    func colorAlpha() -> UIImage {
+           let beginImage = CIImage(image: self)
+           if let filter = CIFilter(name: "CIMaskToAlpha") {
+            
+               filter.setValue(beginImage, forKey: kCIInputImageKey)
+            let newImage = UIImage(ciImage: filter.outputImage!)
+            return newImage
+           }
+        return self
+       }
+    
+    func sepiaTone() -> UIImage{
+           let beginImage = CIImage(image: self)
+           if let filter = CIFilter(name: "CISepiaTone") {
+                filter.setDefaults()
+                filter.setValue(beginImage, forKey: kCIInputImageKey)
+            let newImage = UIImage(ciImage: filter.outputImage!)
+            return newImage
+           }
+        return self
+    }
+    
+    
+    func colorMap(gradientImage: UIImage) -> UIImage {
+           let beginImage = CIImage(image: self)
+        let colormapImage = CIImage(image: gradientImage)
+           if let filter = CIFilter(name: "CIColorMap") {
+            
+               filter.setValue(beginImage, forKey: kCIInputImageKey)
+            filter.setValue(colormapImage, forKey: kCIInputGradientImageKey)
+            let newImage = UIImage(ciImage: filter.outputImage!)
+            return newImage
+           }
+        return self
+       }
+
 }

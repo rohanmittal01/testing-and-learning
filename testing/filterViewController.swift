@@ -27,6 +27,7 @@ class filterViewController: UIViewController {
         commandQueue = self.device!.makeCommandQueue()
         img1.image = UIImage(named: "Picture1")
         img2.image = UIImage(named: "pic2")
+        
         // Do any additional setup after loading the view.
     }
     
