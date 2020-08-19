@@ -11,9 +11,14 @@
 		BA38452924BCE588002F189E /* multiImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA38452824BCE588002F189E /* multiImageViewController.swift */; };
 		BA38452B24BE28BF002F189E /* filtersOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA38452A24BE28BF002F189E /* filtersOptionsViewController.swift */; };
 		BA6B16F024AA81000094C5FE /* filterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6B16EF24AA81000094C5FE /* filterViewController.swift */; };
+		BA6CADE924BF250900E6AEB7 /* mergeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6CADE824BF250900E6AEB7 /* mergeExtension.swift */; };
+		BA6CADEB24BF266E00E6AEB7 /* mergeVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6CADEA24BF266E00E6AEB7 /* mergeVideoViewController.swift */; };
+		BA6CADEE24BF287C00E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.23 PM.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BA6CADEC24BF27D600E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.23 PM.mp4 */; };
+		BA6CADEF24BF287F00E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.24 PM.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BA6CADED24BF27E000E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.24 PM.mp4 */; };
 		BA7E097E24A5400900124238 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7E097D24A5400900124238 /* CloudKit.framework */; };
 		BA935AB324A47DB000E3ACA3 /* VideoCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA935AB224A47DB000E3ACA3 /* VideoCompression.swift */; };
 		BA935AB524A47DE000E3ACA3 /* videoCompressionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA935AB424A47DE000E3ACA3 /* videoCompressionViewController.swift */; };
+		BA94488624BF68830080EF6C /* noiseReductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA94488524BF68830080EF6C /* noiseReductionViewController.swift */; };
 		BAAEC8E024BA4C29009B2456 /* imgFilterWithCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEC8DF24BA4C29009B2456 /* imgFilterWithCollectionViewController.swift */; };
 		BAAEC8E224BA4D32009B2456 /* imgFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEC8E124BA4D32009B2456 /* imgFilterCollectionViewCell.swift */; };
 		BAAF327724A6949200E2532B /* trimmerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAF327624A6949200E2532B /* trimmerViewController.swift */; };
@@ -31,10 +36,15 @@
 		BA38452824BCE588002F189E /* multiImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiImageViewController.swift; sourceTree = "<group>"; };
 		BA38452A24BE28BF002F189E /* filtersOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filtersOptionsViewController.swift; sourceTree = "<group>"; };
 		BA6B16EF24AA81000094C5FE /* filterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filterViewController.swift; sourceTree = "<group>"; };
+		BA6CADE824BF250900E6AEB7 /* mergeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mergeExtension.swift; sourceTree = "<group>"; };
+		BA6CADEA24BF266E00E6AEB7 /* mergeVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mergeVideoViewController.swift; sourceTree = "<group>"; };
+		BA6CADEC24BF27D600E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.23 PM.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WhatsApp Video 2020-07-15 at 5.29.23 PM.mp4"; sourceTree = "<group>"; };
+		BA6CADED24BF27E000E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.24 PM.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WhatsApp Video 2020-07-15 at 5.29.24 PM.mp4"; sourceTree = "<group>"; };
 		BA7E097B24A53FE800124238 /* testing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = testing.entitlements; sourceTree = "<group>"; };
 		BA7E097D24A5400900124238 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		BA935AB224A47DB000E3ACA3 /* VideoCompression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompression.swift; sourceTree = "<group>"; };
 		BA935AB424A47DE000E3ACA3 /* videoCompressionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videoCompressionViewController.swift; sourceTree = "<group>"; };
+		BA94488524BF68830080EF6C /* noiseReductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = noiseReductionViewController.swift; sourceTree = "<group>"; };
 		BAAEC8DF24BA4C29009B2456 /* imgFilterWithCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imgFilterWithCollectionViewController.swift; sourceTree = "<group>"; };
 		BAAEC8E124BA4D32009B2456 /* imgFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imgFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		BAAF327624A6949200E2532B /* trimmerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trimmerViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +114,11 @@
 				BA38452824BCE588002F189E /* multiImageViewController.swift */,
 				BAAEC8E124BA4D32009B2456 /* imgFilterCollectionViewCell.swift */,
 				BA38452A24BE28BF002F189E /* filtersOptionsViewController.swift */,
+				BA6CADE824BF250900E6AEB7 /* mergeExtension.swift */,
+				BA6CADEA24BF266E00E6AEB7 /* mergeVideoViewController.swift */,
+				BA94488524BF68830080EF6C /* noiseReductionViewController.swift */,
+				BA6CADEC24BF27D600E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.23 PM.mp4 */,
+				BA6CADED24BF27E000E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.24 PM.mp4 */,
 				BAEFB60F24A26E87001E53CB /* Assets.xcassets */,
 				BAEFB61124A26E87001E53CB /* LaunchScreen.storyboard */,
 				BAEFB61424A26E87001E53CB /* Info.plist */,
@@ -172,6 +187,8 @@
 				BAEFB61324A26E87001E53CB /* LaunchScreen.storyboard in Resources */,
 				BAEFB61024A26E87001E53CB /* Assets.xcassets in Resources */,
 				BAEFB60E24A26E82001E53CB /* Main.storyboard in Resources */,
+				BA6CADEE24BF287C00E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.23 PM.mp4 in Resources */,
+				BA6CADEF24BF287F00E6AEB7 /* WhatsApp Video 2020-07-15 at 5.29.24 PM.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +202,8 @@
 				BAEFB60B24A26E82001E53CB /* ViewController.swift in Sources */,
 				BACD39EC24A895F50039BF1A /* mergeAudioVideoViewController.swift in Sources */,
 				BA6B16F024AA81000094C5FE /* filterViewController.swift in Sources */,
+				BA94488624BF68830080EF6C /* noiseReductionViewController.swift in Sources */,
+				BA6CADEB24BF266E00E6AEB7 /* mergeVideoViewController.swift in Sources */,
 				BA051C2624B901F100AE1383 /* imageFilterViewController.swift in Sources */,
 				BA935AB524A47DE000E3ACA3 /* videoCompressionViewController.swift in Sources */,
 				BAAEC8E224BA4D32009B2456 /* imgFilterCollectionViewCell.swift in Sources */,
@@ -192,6 +211,7 @@
 				BAEFB60724A26E82001E53CB /* AppDelegate.swift in Sources */,
 				BA935AB324A47DB000E3ACA3 /* VideoCompression.swift in Sources */,
 				BAEFB60924A26E82001E53CB /* SceneDelegate.swift in Sources */,
+				BA6CADE924BF250900E6AEB7 /* mergeExtension.swift in Sources */,
 				BAAEC8E024BA4C29009B2456 /* imgFilterWithCollectionViewController.swift in Sources */,
 				BA38452924BCE588002F189E /* multiImageViewController.swift in Sources */,
 				BAAF327724A6949200E2532B /* trimmerViewController.swift in Sources */,

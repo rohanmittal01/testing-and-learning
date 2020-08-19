@@ -14,8 +14,8 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
     @IBOutlet weak var collectionView: UICollectionView!
     var originalImage: UIImage!
     var gradientImage: UIImage!
-    let filterName=["Default", "Noise Reduction", "Map", "Invert", "Sepia", "Chrome", "Fade", "Instant", "Mono", "Noir", "Process", "Tonal", "Tone1", "Tone2", "Transfer"]
-    let filterType = ["", "CINoiseReduction", "CIColorMap", "CIColorInvert", "CISepiaTone", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono"
+    let filterName=["Default", "Noise Reduction", "Map", "Invert", "Sepia", "Clamp", "Posterize", "Chrome", "Fade", "Instant", "Mono", "Noir", "Process", "Tonal", "Tone1", "Tone2", "Transfer"]
+    let filterType = ["", "CINoiseReduction", "CIColorMap", "CIColorInvert", "CISepiaTone", "CIColorClamp", "CIColorPosterize", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono"
         , "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CISRGBToneCurveToLinear", "CILinearToSRGBToneCurve", "CIPhotoEffectTransfer"]
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
@@ -133,7 +133,7 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
 //        }
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-               return CGSize(width: 80, height: 95)
+               return CGSize(width: 90, height: 105)
            }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -144,13 +144,17 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
             case 0:
                 cell.image.image = originalImage
             case 1:
-                cell.image.image = originalImage.noiseReduction()
+                cell.image.image = originalImage.noiseReduction(noiseLevel: 0.02, sharpness: 0.4)
             case 2:
                 cell.image.image = originalImage.colorMap(gradientImage: gradientImage)
             case 3:
                 cell.image.image = originalImage.colorInvert()
             case 4:
                 cell.image.image = originalImage.sepiaTone()
+            case 5:
+                cell.image.image = originalImage.colorClamp()
+            case 6:
+                cell.image.image = originalImage.colorPosterize()
             default:
                 cell.image.image = originalImage.addFilter(filter: FilterType(rawValue: filterType[indexPath.row])!)
             }
@@ -158,7 +162,6 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
             print("Filter Name: \(filterName[indexPath.row])")
             print("Filter Type: \(filterType[indexPath.row])")
             cell.imageName.text = filterName[indexPath.row]
-            cell.layer.cornerRadius = 5
       
             return cell
         }
@@ -187,10 +190,10 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             startActivityIndicator()
             if(indexPath.row == 0){
-                imageView.image = originalImage.colorAlpha()
+                imageView.image = originalImage.qrCode()
+//                imageView.image = originalImage.colorAlpha()
             }else if(indexPath.row == 1){
-                imageView.image = originalImage.noiseReduction()
-                
+                imageView.image = originalImage.noiseReduction(noiseLevel: 0.02, sharpness: 0.4)
             }else if(indexPath.row == 2){
                 imageView.image = originalImage.colorMap(gradientImage: gradientImage)
                 stopActivityIndicator()
@@ -200,9 +203,9 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
             }else if(indexPath.row == 4){
                 imageView.image = originalImage.sepiaTone()
             }else if(indexPath.row == 5){
-                selectedFilter(indexPath: 5)
+                imageView.image = originalImage.colorClamp()
             }else if(indexPath.row == 6){
-                selectedFilter(indexPath: 6)
+                imageView.image = originalImage.colorPosterize()
             }else if(indexPath.row == 7){
                 selectedFilter(indexPath: 7)
             }else if(indexPath.row == 8){
@@ -221,6 +224,10 @@ class imgFilterWithCollectionViewController: UIViewController, UICollectionViewD
                 selectedFilter(indexPath: 14)
             }else if(indexPath.row == 15){
                 selectedFilter(indexPath: 15)
+            }else if(indexPath.row == 16){
+                selectedFilter(indexPath: 16)
+            }else if(indexPath.row == 17){
+                selectedFilter(indexPath: 17)
             }
 
         }
@@ -281,15 +288,15 @@ extension UIImage {
         return UIImage(cgImage: cgImage!)
     }
     
-      func noiseReduction() -> UIImage{
+    func noiseReduction(noiseLevel: Float, sharpness: Float) -> UIImage{
           let beginImage = CIImage(image: self)
 
         print("In function")
              if let filter = CIFilter(name: "CINoiseReduction") {
                           filter.setDefaults()
                  filter.setValue(beginImage, forKey: kCIInputImageKey)
-              filter.setValue(0.1, forKey: "inputNoiseLevel")
-              filter.setValue(0.4, forKey: "inputSharpness")
+              filter.setValue(noiseLevel, forKey: "inputNoiseLevel")
+              filter.setValue(sharpness, forKey: "inputSharpness")
               let newImage = UIImage(ciImage: filter.outputImage!)
     
               return newImage
@@ -307,6 +314,32 @@ extension UIImage {
            }
         return self
        }
+
+    func colorClamp() -> UIImage {
+        print("clamp")
+           let beginImage = CIImage(image: self)
+           if let filter = CIFilter(name: "CIColorClamp") {
+                filter.setValue(beginImage, forKey: kCIInputImageKey)
+                filter.setDefaults()
+            let newImage = UIImage(ciImage: filter.outputImage!)
+            return newImage
+           }
+        return self
+       }
+    
+    func colorPosterize() -> UIImage{
+   
+                 let beginImage = CIImage(image: self)
+                 if let filter = CIFilter(name: "CIColorPosterize") {
+                      filter.setValue(beginImage, forKey: kCIInputImageKey)
+                      filter.setDefaults()
+                  let newImage = UIImage(ciImage: filter.outputImage!)
+                  return newImage
+                 }
+              return self
+             
+    }
+
     func colorAlpha() -> UIImage {
            let beginImage = CIImage(image: self)
            if let filter = CIFilter(name: "CIMaskToAlpha") {
@@ -342,5 +375,20 @@ extension UIImage {
            }
         return self
        }
+    
+    func qrCode() -> UIImage {
+//        let message = "https://medium.com/@yuyaHorita/swift-metal-image-processing-75f1c2342306"
+//        let data = message.data(using: .utf8)
+        var stri:String = "this is my string to convert to NSData"
+        let utf8str = stri.data(using: String.Encoding.utf8)
+                if let filter = CIFilter(name: "CIQRCodeGenerator") {
+             
+                    filter.setDefaults()
+                filter.setValue(utf8str, forKey: "inputMessage")
+             let newImage = UIImage(ciImage: filter.outputImage!)
+             return newImage
+            }
+         return self
+        }
 
 }

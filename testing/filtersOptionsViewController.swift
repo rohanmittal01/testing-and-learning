@@ -63,7 +63,7 @@ class filtersOptionsViewController: UIViewController, UICollectionViewDelegate, 
         //        }
                 
                 func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-                       return CGSize(width: 281, height: 75)
+                       return CGSize(width: 300, height: 75)
                    }
                 
                 func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -78,7 +78,13 @@ class filtersOptionsViewController: UIViewController, UICollectionViewDelegate, 
                 
                 func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
                 
-                    print(indexPath.row)
+                    switch(indexPath.row){
+                    case 0: performSegue(withIdentifier: "1", sender: nil)
+                    case 1: performSegue(withIdentifier: "2", sender: nil)
+                    case 4: performSegue(withIdentifier: "4", sender: nil)
+                    default:
+                        return
+                    }
 
                 }
 
